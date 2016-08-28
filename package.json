@@ -1,0 +1,22 @@
+{
+  "name": "ticketmaster",
+  "version": "1.0.0",
+  "description": "1. login with social network\r 2. download a list of favourite artists [Last.fm API]\r 3. save it to the DB\r 4. save email to the DB\r 5. save location to the DB (current or by postcode, city)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s8k/ticketmaster-events-notifications.git"
+  },
+  "bugs": {
+    "url": "https://github.com/s8k/ticketmaster-events-notifications/issues"
+  },
+  "homepage": "https://github.com/s8k/ticketmaster-events-notifications#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
