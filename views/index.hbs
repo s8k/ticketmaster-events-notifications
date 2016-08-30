@@ -1,0 +1,18 @@
+<h2>Sign in with</h2>
+<p>
+    <button type="button" id="signin-spotify">Spotify</button>
+</p>
+<p>
+    <button type="button" id="signin-lastfm">Last.fm</button>
+</p>
+<p>
+    <button type="button" id="signin-facebook">Facebook</button>
+</p>
+
+<script>
+    $(function() {
+        $('#signin-spotify').click(function() {
+            window.location.href = '/signin/spotify';
+        });
+    });
+</script>
