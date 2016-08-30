@@ -17,10 +17,25 @@ router.get('/spotify/callback', function (req, res, next) {
     obtainToken(authCode)
         .then(function (response) {
             var token = response.getBody();
+
             getUserProfile(token)
                 .then(function (response) {
                     var profile = response.getBody();
-                    res.send('Id: ' + profile.id + ' Email: ' + profile.email);
+
+                    res.write('Id: ' + profile.id);
+                    res.write('\nEmail: ' + profile.email);
+                    var profileJson = response.body;
+                    res.write('\n\nUser profile (JSON): ' + profileJson);
+
+                    getUsersTopArtists(token)
+                        .then(function (response) {
+                            var topArtists = response.body;
+                            res.write('\n\nTop artists (JSON): ' + topArtists);
+                            res.end();
+                        })
+                        .fail(function (response) {
+                            res.send(response.getBody());
+                        });
                 })
                 .fail(function (response) {
                     res.send(response.getBody());
@@ -48,6 +63,15 @@ function obtainToken(authCode) {
 
 function getUserProfile(token) {
     return requestify.request('https://api.spotify.com/v1/me', {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token.access_token
+        }
+    });
+}
+
+function getUsersTopArtists(token) {
+    return requestify.request('https://api.spotify.com/v1/me/top/artists?limit=15', {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + token.access_token
