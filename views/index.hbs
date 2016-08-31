@@ -1,18 +1,24 @@
 <h2>Sign in with</h2>
 <p>
-    <button type="button" id="signin-spotify">Spotify</button>
+    <button type="button" id="signin-spotify" class="btn btn-primary">Spotify</button>
 </p>
 <p>
-    <button type="button" id="signin-lastfm">Last.fm</button>
+    <button type="button" id="signin-lastfm" class="btn btn-primary">Last.fm</button>
 </p>
 <p>
-    <button type="button" id="signin-facebook">Facebook</button>
+    <button type="button" id="signin-facebook" class="btn btn-primary">Facebook</button>
 </p>
+<p>
+    <a href="/events" class="btn btn-info">Without SignIn</a>
+</p>
+
 
 <script>
     $(function() {
         $('#signin-spotify').click(function() {
             window.location.href = '/signin/spotify';
         });
+
+
     });
 </script>
