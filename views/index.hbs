@@ -1,28 +1,40 @@
-<h2>Sign in with</h2>
-<p>
-    <button type="button" id="signin-spotify" class="btn btn-primary">Spotify</button>
-</p>
-<p>
-    <button type="button" id="signin-lastfm" class="btn btn-primary">Last.fm</button>
-</p>
-<p>
-    <button type="button" id="signin-facebook" class="btn btn-primary">Facebook</button>
-</p>
-<p>
-    <a href="/events" class="btn btn-info">Without SignIn</a>
-</p>
-
-<p>
-    <a href="/around" class="btn btn-warning">Take a look around</a>
-</p>
 
 
-<script>
-    $(function() {
-        $('#signin-spotify').click(function() {
-            window.location.href = '/signin/spotify';
-        });
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="login-panel panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Please Sign In Via</h3>
+            </div>
 
+            <div class="panel-body">
+                <a href="/signin/spotify" class="btn btn-block btn-primary">Spotify</button>
+                <a href="/signin/lastfm" class="btn btn-block btn-primary">Last.fm</button>
+                <a href="/signin/facebook" class="btn btn-block btn-primary btn-facebook">
+                    <i class="fa fa-facebook"></i> Sign in with Facebook
+                </a>
+            </div>
 
-    });
-</script>
+            <h3 class="panel-title text-center">OR</h3>
+            <div class="panel-body">
+                <form role="form">
+                    <fieldset>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                            </label>
+                        </div>
+                            <!-- Change this to a button or input when using this as a form -->
+                        <a href="/events" class="btn btn-lg btn-success btn-block">Login</a>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
