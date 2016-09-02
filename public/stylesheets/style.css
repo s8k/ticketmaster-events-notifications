@@ -4,3 +4,23 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.btn-lastfm { 
+    border-color: #e62d34;
+    background-color: #e62d34;
+}
+
+.btn-lastfm:hover {
+    border-color: #a61b1e;
+    background-color: #a61b1e;
+}
+
+.btn-spotify { 
+    border-color: #2ebd59;
+    background-color: #2ebd59;
+}
+
+.btn-spotify:hover {
+    border-color: #29a84f;
+    background-color: #29a84f;
+}

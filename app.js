@@ -31,9 +31,6 @@ app.use('/signin', signin);
 app.use('/events', events)
 app.use('/around', around)
 
-// static routes
-app.use('/public', express.static(__dirname + '/public'));
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
