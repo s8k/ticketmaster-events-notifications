@@ -24,12 +24,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+// dynamic routes
 app.use('/', routes);
 app.use('/signin', signin);
 app.use('/events', events)
 app.use('/around', around)
 
-
+// static routes
 app.use('/public', express.static(__dirname + '/public'));
 
 // catch 404 and forward to error handler
