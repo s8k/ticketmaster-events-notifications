@@ -1,7 +1,7 @@
 var config = {
     spotify: {
         clientId: '24de3f695f4b427ab719fb9cf84f1518',
-        cliendSecret: '<hidden> ',
+        cliendSecret: '<hidden>',
         callbackUrl: 'http://localhost:3000/signin/spotify/callback'
     },
     lastfm: {
