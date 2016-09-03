@@ -91,13 +91,13 @@ function next() {
       		radius: document.getElementById("radius").value,
       	},
        	success: function() {
-       		window.location.href = "/notifications";
        	},
        	error: function(jqxhr) {
        		document.getElementById("error").innerHTML = jqxhr.responseText;
        	},
        	dataType: "json"
 	});
+       		window.location.href = "/notifications";
 }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxis5Sna3JkgTUQ7E-HbGO-sa6Xxikfg0" async defer></script>
