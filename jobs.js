@@ -10,16 +10,22 @@ var j = schedule.scheduleJob('*/1 * * * *', function () {
         .then(function (result) {
             var users = result.feed;
             users.forEach(function (u) {
-                u.topArtists.forEach(function (a) {
-                    ticketmaster
-                        .getEventsByArtistAndLocation(u.location.latitude, u.location.longitude, u.location.radius, a.name)
-                        .then(function (result) {
-                            console.log(result);
-                        })
-                        .fail(function (error) {
-                            console.log(`Error occured while reading user profile: ${u.id}`);
-                        });
-                }, this);
+//                u.topArtists.forEach(function (a) {
+                    // ticketmaster
+                    //     .getEventsByArtistAndLocation(u.location.latitude, u.location.longitude, u.location.radius, a.name)
+                    //     .then(function (result) {
+                            u.notifications = u.notifications ? u.notifications : [];
+                            u.notifications.push('Mando Diao has a concert on October, 30 in London.');
+                            usersDb
+                                .upsertProfile(u)
+                                .fail(function (error) {
+                                    console.log('Error occured while pushing notification');
+                                });
+                    //     })
+                    //     .fail(function (error) {
+                    //         console.log(`Error occured while reading user profile: ${u.id}`);
+                    //     });
+  //              }, this);
             }, this);
         })
         .fail(function (error) {
