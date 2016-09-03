@@ -2,13 +2,13 @@ var config = {};
 
 config.spotify = {
     clientId: '24de3f695f4b427ab719fb9cf84f1518',
-    cliendSecret: '1750923bb05a422e96636619add5c997',
+    clientSecret: '1750923bb05a422e96636619add5c997',
     callbackUrl: 'http://localhost:3000/signin/spotify/callback'
 };
 
-config.lastfm = {
-    clientId: 'c8194525e29b50a2db508253ec72e6e1',
-    cliendSecret: '<hidden>',
+config.tm = {
+    clientId: 'IJ5f9Esalq48QebA7t8ENydSGQAGhVIu',
+    clientSecret: 'oTMGdDSnnekswaUM',
     callbackUrl: 'http://localhost:3000/signin/lastfm/callback'
 };
 
