@@ -33,19 +33,26 @@
         $('#myArtists').dataTable( {
             "ordering": false
         });
-
-        
         
         $('#saveArtists').click(function (){
             var checkedArtists = [];
 
             $('.notify:checkbox:checked').each(function(){
+                
                 checkedArtists.push($(this).val());
             });
-
-            console.log(checkedArtists);
+            
+            $.ajax({
+	            type: "POST",
+    	        url: "/wizard/step1",
+      	        data: { chosen: checkedArtists },
+       	        success: function() {
+                       console.log("Success");
+       		        window.location.href="/wizard/step2";
+       	        },
+       	        dataType: "json"
+	        });
         });
-
         
     });
 </script>
