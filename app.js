@@ -12,6 +12,7 @@ var signin = require('./routes/signin');
 var events = require('./routes/events');
 var around = require('./routes/around');
 var artists = require('./routes/artists');
+var wizard = require('./routes/wizard');
 
 var app = express();
 
@@ -34,6 +35,8 @@ app.use('/signin', signin);
 app.use('/events', events);
 app.use('/around', around);
 app.use('/artists', artists);
+app.use('/wizard', wizard);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

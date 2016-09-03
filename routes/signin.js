@@ -23,14 +23,26 @@ router.get('/spotify/callback', function (req, res, next) {
                 .then(function (response) {
                     console.log('User signed in: ' + response.body);
 
-                    var userProfile = response.getBody();
+                    var userRaw = response.getBody();
+                    var userProfile = mapUserProfile(userRaw);
 
                     getUsersTopArtists(token)
                         .then(function (response) {
-                            var topArtists = response.getBody();
+                            console.log('Top artists: ' + response.body);
+
+                            var topArtistsRaw = response.getBody();
+                            var topArtists = topArtistsRaw.items.map(mapTopArtist);
                             userProfile.topArtists = topArtists;
-                            usersDb.upsertProfile(userProfile);
-                            res.send(`User created ${userProfile.id}. Refirecting...`);
+                            usersDb
+                                .upsertProfile(userProfile)
+                                .then(function (result) {
+                                    console.log(`User created ${userProfile.id}`);
+                                    res.cookie('user-id', userProfile.id);
+                                    res.redirect('/wizard/step1');
+                                })
+                                .fail(function (error) {
+                                    res.render('error', { title: 'Error occured', message: 'Error during saving User profile' });
+                                });
                         })
                         .fail(function (response) {
                             res.render('error', { title: 'Error occured', message: response.getBody() });
@@ -76,6 +88,28 @@ function getUsersTopArtists(token) {
             'Authorization': 'Bearer ' + token.access_token
         }
     });
+}
+
+function mapUserProfile(userRaw) {
+    var userProfile = {};
+    userProfile.id = userRaw.id;
+    userProfile.email = userRaw.email;
+    userProfile.external_urls = userRaw.external_urls;
+
+    return userProfile;
+}
+
+function mapTopArtist(artistRaw) {
+    var artist = {};
+    artist.id = artistRaw.id;
+    artist.name = artistRaw.name;
+    artist.notifiable = true;
+    artist.popularity = artistRaw.popularity;
+    artist.genres = artistRaw.genres;
+    artist.external_urls = artistRaw.external_urls;
+    artist.images = artistRaw.images;
+
+    return artist;
 }
 
 module.exports = router;

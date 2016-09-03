@@ -10,14 +10,13 @@ var collectionId = config.db.collections.users;
 var users = {};
 
 users.upsertProfile = function (userData) {
-    client
-        .upsertDocumentAsync(dbUtils.buildCollectionLink(databaseId, collectionId), userData)
-        .then(function (result) {
-            console.log(`User created ${userData.id}`);
-        })
-        .fail(function (error) {
-            console.log('An error occured while inserting/updating User', error);
-        });
+    return client
+        .upsertDocumentAsync(dbUtils.buildCollectionLink(databaseId, collectionId), userData);
+};
+
+users.readProfile = function (userId) {
+    return client
+        .readDocumentAsync(dbUtils.buildDocumentLink(databaseId, collectionId, userId));
 };
 
 module.exports = users;

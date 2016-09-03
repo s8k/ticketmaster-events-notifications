@@ -1,0 +1,99 @@
+<div class="row">
+    <div class="col-md-4 col-md-offset-4" style="width: 500px">
+      <div>
+	  	<button onClick="getLocation()">Use current location</button>
+      </div>
+      <br>
+      <div>
+        <input id="searchText"></input>
+	  	<button onClick="search()">Search</button>
+		<div id="searchResults"></div>
+      </div>
+	  <hr>
+	  <div id="location"></div>
+	  <hr>
+      <div>
+        Radius: <input id="radius" value="10"></input> miles
+      </div>
+	  <hr>
+	  <div align="right">
+	  	<button id="next" onClick="next()">Next</button>
+	  </div>
+	</div>
+</div>
+
+<script type="application/javascript">
+var position;
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        var x = document.getElementById("location");
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function search() {
+	$.ajax({
+		url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + document.getElementById("searchText").value,
+		data: {},
+		success: function (results) {
+			var text = "Select from results: <ul>";
+			for (i = 0; i < results.results.length; i++) {
+				var result = results.results[i];
+				var name = result.formatted_address;
+				var lat = result.geometry.location.lat;
+				var lon = result.geometry.location.lng;
+				text += "<li style='cursor: pointer' onClick='setPosition({latitude: " + lat + ", longitude: " + lon + "})'>" + name + "</li>";
+			}
+			document.getElementById("searchResults").innerHTML = text;
+		}
+	});
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred."
+            break;
+    }
+}
+
+function showPosition(pos) {
+	setPosition(pos.coords);
+}
+
+function setPosition(pos) {
+    var x = document.getElementById("location");
+    x.innerHTML = "Used position: lat: " + pos.latitude + ", lon: " + pos.longitude;
+    position = pos;
+}
+
+function next() {
+	console.log(position);
+	$.ajax({
+	  type: "POST",
+    	url: "/wizard/step2",
+      	data: {
+      		latitude: position.latitude,
+      		longitude: position.longitude,
+      		radius: document.getElementById("radius").value,
+      	},
+       	success: function() {
+       		// go to next page
+       	},
+       	dataType: "json"
+	});
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxis5Sna3JkgTUQ7E-HbGO-sa6Xxikfg0" async defer></script>
