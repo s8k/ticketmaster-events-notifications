@@ -15,7 +15,7 @@ config.lastfm = {
 config.db = {
     endpoint: 'https://ticketmaster-db.documents.azure.com:443/',
     key: 'jfUzukUCpGGl6MojawXnUCjxoGn4ZL1sg8TWH2Kl0LIQDbT4Z17Z9QXss4afoKjTqlOow0OoYU5ns3rVD0EsxQ==',
-    name: 'EventificationDb',
+    id: 'EventificationDb',
     collections: {
         users: 'Users'
     }

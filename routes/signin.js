@@ -1,4 +1,5 @@
 var config = require('../config');
+var usersDb = require('../db/users');
 var requestify = require('requestify');
 var express = require('express');
 var router = express.Router();
@@ -20,29 +21,27 @@ router.get('/spotify/callback', function (req, res, next) {
 
             getUserProfile(token)
                 .then(function (response) {
-                    var profile = response.getBody();
+                    console.log('User signed in: ' + response.body);
 
-                    res.write('Id: ' + profile.id);
-                    res.write('\nEmail: ' + profile.email);
-                    var profileJson = response.body;
-                    res.write('\n\nUser profile (JSON): ' + profileJson);
+                    var userProfile = response.getBody();
 
                     getUsersTopArtists(token)
                         .then(function (response) {
-                            var topArtists = response.body;
-                            res.write('\n\nTop artists (JSON): ' + topArtists);
-                            res.end();
+                            var topArtists = response.getBody();
+                            userProfile.topArtists = topArtists;
+                            usersDb.upsertProfile(userProfile);
+                            res.send(`User created ${userProfile.id}. Refirecting...`);
                         })
                         .fail(function (response) {
-                            res.send(response.getBody());
+                            res.render('error', { title: 'Error occured', message: response.getBody() });
                         });
                 })
                 .fail(function (response) {
-                    res.send(response.getBody());
+                    res.render('error', { title: 'Error occured', message: response.getBody() });
                 });
         })
         .fail(function (response) {
-            res.send(response.getBody());
+            res.render('error', { title: 'Error occured', message: response.getBody() });
         });
 });
 

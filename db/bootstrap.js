@@ -1,9 +1,7 @@
-var config = require("../config");
+var config = require('../config');
 var url = require('url');
 
-
 var DocumentClient = require('documentdb-q-promises').DocumentClientWrapper;
-
 var client = new DocumentClient(config.db.endpoint, { masterKey: config.db.key });
 
 client
@@ -14,19 +12,19 @@ client
         var database = null;
 
         for (var i = 0; i < databases.length; i++) {
-            if (databases[i].id === config.db.name) {
+            if (databases[i].id === config.db.id) {
                 var database = databases[i];
                 break;
             }
         }
 
         if (database === null) {
-            console.log("Creating database");
-            return client.createDatabaseAsync({ id: config.db.name });
+            console.log('Creating database');
+            return client.createDatabaseAsync({ id: config.db.id });
         }
 
-        console.log("Database found");
-        console.log("Reading database");
+        console.log('Database found');
+        console.log('Reading database');
         return client.readDatabaseAsync(database._self);
     })
     .then(function (databaseResponse) {
@@ -52,14 +50,14 @@ client
                     createCollection(collectionToCreate[j]);
                 }
 
-                console.log("All collections are ready");
+                console.log('All collections are ready');
             })
             .fail(function (error) {
-                console.log("An error occured in DocumentDB while accessing Collections", error);
+                console.log('An error occured in DocumentDB while accessing Collections', error);
             });;
     })
     .fail(function (error) {
-        console.log("An error occured in DocumentDB while accessing Databases", error);
+        console.log('An error occured in DocumentDB while accessing Databases', error);
     });
 
 function createCollection(collectionId) {
