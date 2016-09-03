@@ -19,4 +19,9 @@ users.readProfile = function (userId) {
         .readDocumentAsync(dbUtils.buildDocumentLink(databaseId, collectionId, userId));
 };
 
+users.readAllProfiles = function () {
+    return client
+        .readDocuments(dbUtils.buildCollectionLink(databaseId, collectionId));
+};
+
 module.exports = users;
