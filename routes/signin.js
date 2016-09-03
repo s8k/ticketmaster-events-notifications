@@ -103,6 +103,7 @@ function mapTopArtist(artistRaw) {
     var artist = {};
     artist.id = artistRaw.id;
     artist.name = artistRaw.name;
+    artist.notifiable = true;
     artist.popularity = artistRaw.popularity;
     artist.genres = artistRaw.genres;
     artist.external_urls = artistRaw.external_urls;
