@@ -28,12 +28,11 @@ router.post('/step2', function (req, res, next) {
 	    .readProfile(userId)
 	    .then(function (result) {
 	    	var userProfile = result.resource;
-	    	userProfile.preferences.location = position;
+	    	userProfile.location = position;
             usersDb
 	            .upsertProfile(userProfile)
 	            .then(function (result) {
 	                console.log(`Location set.`);
-	                res.redirect('/wizard/step3');
 	            })
 	            .fail(function (error) {
 	                res.render('error', { title: 'Error occured', message: 'Error during saving User profile' });

@@ -19,6 +19,8 @@
 	  <div align="right">
 	  	<button id="next" onClick="next()">Next</button>
 	  </div>
+	  <div id="error" style="color: red">
+	  </div>
 	</div>
 </div>
 
@@ -45,7 +47,7 @@ function search() {
 				var name = result.formatted_address;
 				var lat = result.geometry.location.lat;
 				var lon = result.geometry.location.lng;
-				text += "<li style='cursor: pointer' onClick='setPosition({latitude: " + lat + ", longitude: " + lon + "})'>" + name + "</li>";
+				text += "<li style='cursor: pointer' onClick='setPosition({latitude: " + lat + ", longitude: " + lon + "}, \"" + name + "\")'>" + name + "</li>";
 			}
 			document.getElementById("searchResults").innerHTML = text;
 		}
@@ -70,17 +72,16 @@ function showError(error) {
 }
 
 function showPosition(pos) {
-	setPosition(pos.coords);
+	setPosition(pos.coords, "Current location");
 }
 
-function setPosition(pos) {
+function setPosition(pos, label) {
     var x = document.getElementById("location");
-    x.innerHTML = "Used position: lat: " + pos.latitude + ", lon: " + pos.longitude;
+    x.innerHTML = "Selected: " + label + "<br>lat: " + pos.latitude + ", lon: " + pos.longitude;
     position = pos;
 }
 
 function next() {
-	console.log(position);
 	$.ajax({
 	  type: "POST",
     	url: "/wizard/step2",
@@ -90,10 +91,13 @@ function next() {
       		radius: document.getElementById("radius").value,
       	},
        	success: function() {
-       		// go to next page
+       	},
+       	error: function(jqxhr) {
+       		document.getElementById("error").innerHTML = jqxhr.responseText;
        	},
        	dataType: "json"
 	});
+       		window.location.href = "/notifications";
 }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxis5Sna3JkgTUQ7E-HbGO-sa6Xxikfg0" async defer></script>
