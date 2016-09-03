@@ -12,6 +12,10 @@
 	  <hr>
 	  <div id="location"></div>
 	  <hr>
+      <div>
+        Radius: <input id="radius" value="10"></input> miles
+      </div>
+	  <hr>
 	  <div align="right">
 	  	<button id="next" onClick="next()">Next</button>
 	  </div>
@@ -83,6 +87,7 @@ function next() {
       	data: {
       		latitude: position.latitude,
       		longitude: position.longitude,
+      		radius: document.getElementById("radius").value,
       	},
        	success: function() {
        		// go to next page
