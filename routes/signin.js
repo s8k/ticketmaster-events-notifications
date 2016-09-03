@@ -29,8 +29,16 @@ router.get('/spotify/callback', function (req, res, next) {
                         .then(function (response) {
                             var topArtists = response.getBody();
                             userProfile.topArtists = topArtists;
-                            usersDb.upsertProfile(userProfile);
-                            res.send(`User created ${userProfile.id}. Refirecting...`);
+                            usersDb
+                                .upsertProfile(userProfile)
+                                .then(function (result) {
+                                    console.log(`User created ${userProfile.id}`);
+                                    res.cookie('user-id', userProfile.id);
+                                    res.redirect('/wizard/step1');
+                                })
+                                .fail(function (error) {
+                                    res.render('error', { title: 'Error occured', message: 'Error during saving User profile' });
+                                });
                         })
                         .fail(function (response) {
                             res.render('error', { title: 'Error occured', message: response.getBody() });
