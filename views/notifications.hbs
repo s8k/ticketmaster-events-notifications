@@ -1,0 +1,32 @@
+<div class="row">
+    <b>Notifications will appear soon.</b>
+    <p>
+    <ul id="notifications"></ul>
+</div>
+
+<script type="application/javascript">
+var last = new Date();
+var intervalID = setInterval(
+		function(){ poll() },
+		5000);
+
+function poll() {
+	$.ajax({
+	  type: "POST",
+    	url: "/notifications/poll?last=",
+      	data: {
+      		last: last.toJSON(),
+      	},
+       	success: function(response) {
+       		for (var i = 0; i < response.notifications.length; i++) {
+       			showNotification(response.notifications[i]);
+       		}
+       	},
+       	dataType: "json"
+	});
+	last = new Date();
+}
+function showNotification(text) {
+	document.getElementById("notifications").innerHTML += "<li>" + text + "</li>";
+}
+</script>

@@ -13,6 +13,7 @@ var signin = require('./routes/signin');
 var events = require('./routes/events');
 var around = require('./routes/around');
 var wizard = require('./routes/wizard');
+var notifications = require('./routes/notifications');
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use('/signin', signin);
 app.use('/events', events);
 app.use('/around', around);
 app.use('/wizard', wizard);
+app.use('/notifications', notifications);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

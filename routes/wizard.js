@@ -33,7 +33,7 @@ router.post('/step2', function (req, res, next) {
 	            .upsertProfile(userProfile)
 	            .then(function (result) {
 	                console.log(`Location set.`);
-	                res.redirect('/wizard/step3');
+	                res.end();
 	            })
 	            .fail(function (error) {
 	                res.render('error', { title: 'Error occured', message: 'Error during saving User profile' });

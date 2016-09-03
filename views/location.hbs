@@ -19,6 +19,8 @@
 	  <div align="right">
 	  	<button id="next" onClick="next()">Next</button>
 	  </div>
+	  <div id="error" style="color: red">
+	  </div>
 	</div>
 </div>
 
@@ -80,7 +82,6 @@ function setPosition(pos, label) {
 }
 
 function next() {
-	console.log(position);
 	$.ajax({
 	  type: "POST",
     	url: "/wizard/step2",
@@ -90,7 +91,10 @@ function next() {
       		radius: document.getElementById("radius").value,
       	},
        	success: function() {
-       		// go to next page
+       		window.location.href = "/notifications";
+       	},
+       	error: function(jqxhr) {
+       		document.getElementById("error").innerHTML = jqxhr.responseText;
        	},
        	dataType: "json"
 	});
