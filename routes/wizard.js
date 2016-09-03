@@ -7,7 +7,9 @@ router.get('/step1', function (req, res, next) {
     usersDb
         .readProfile(userId)
         .then(function (result) {
-            res.send(result.resource);
+            var user = result.resource;
+
+            res.render('artists', { artists: user.topArtists });
         })
         .fail(function (error) {
             res.render('error', { title: 'Error occured', message: 'Error during reading User profile' });
