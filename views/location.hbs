@@ -79,7 +79,7 @@ function next() {
 	console.log(position);
 	$.ajax({
 	  type: "POST",
-    	url: "/location",
+    	url: "/wizard/step2",
       	data: {
       		latitude: position.latitude,
       		longitude: position.longitude,
