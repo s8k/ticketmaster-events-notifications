@@ -30,7 +30,8 @@ router.get('/spotify/callback', function (req, res, next) {
                             var topArtists = response.getBody();
                             userProfile.topArtists = topArtists;
                             usersDb.upsertProfile(userProfile);
-                            res.send(`User created ${userProfile.id}. Refirecting...`);
+                            res.cookie("user-id", userProfile.id, {maxAge: 9000000});
+                            res.redirect("/location");
                         })
                         .fail(function (response) {
                             res.render('error', { title: 'Error occured', message: response.getBody() });
