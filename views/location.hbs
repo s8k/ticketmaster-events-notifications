@@ -1,13 +1,15 @@
 <div class="row">
-    <div class="col-md-4 col-md-offset-4">
+    <div class="col-md-4 col-md-offset-4" style="width: 500px">
       <div>
 	  	<button onClick="getLocation()">Use current location</button>
       </div>
+      <br>
       <div>
         <input id="searchText"></input>
-	  	<button onClick="search">Search</button>
+	  	<button onClick="search()">Search</button>
 		<div id="searchResults"></div>
       </div>
+	  <hr>
 	  <div id="location"></div>
 	  <hr>
 	  <div align="right">
@@ -28,12 +30,20 @@ function getLocation() {
     }
 }
 
-function search(text) {
+function search() {
 	$.ajax({
-		url: "http://maps.googleapis.com/maps/api/geocode/outputFormat?json",
+		url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + document.getElementById("searchText").value,
 		data: {},
-		success: function () {
-			
+		success: function (results) {
+			var text = "Select from results: <ul>";
+			for (i = 0; i < results.results.length; i++) {
+				var result = results.results[i];
+				var name = result.formatted_address;
+				var lat = result.geometry.location.lat;
+				var lon = result.geometry.location.lng;
+				text += "<li style='cursor: pointer' onClick='setPosition({latitude: " + lat + ", longitude: " + lon + "})'>" + name + "</li>";
+			}
+			document.getElementById("searchResults").innerHTML = text;
 		}
 	});
 }
@@ -56,10 +66,13 @@ function showError(error) {
 }
 
 function showPosition(pos) {
+	setPosition(pos.coords);
+}
+
+function setPosition(pos) {
     var x = document.getElementById("location");
-    x.innerHTML = "Latitude: " + pos.coords.latitude + 
-    "<br>Longitude: " + pos.coords.longitude;
-    position = pos.coords;
+    x.innerHTML = "Used position: lat: " + pos.latitude + ", lon: " + pos.longitude;
+    position = pos;
 }
 
 function next() {
