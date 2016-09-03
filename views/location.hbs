@@ -45,7 +45,7 @@ function search() {
 				var name = result.formatted_address;
 				var lat = result.geometry.location.lat;
 				var lon = result.geometry.location.lng;
-				text += "<li style='cursor: pointer' onClick='setPosition({latitude: " + lat + ", longitude: " + lon + "})'>" + name + "</li>";
+				text += "<li style='cursor: pointer' onClick='setPosition({latitude: " + lat + ", longitude: " + lon + "}, \"" + name + "\")'>" + name + "</li>";
 			}
 			document.getElementById("searchResults").innerHTML = text;
 		}
@@ -70,12 +70,12 @@ function showError(error) {
 }
 
 function showPosition(pos) {
-	setPosition(pos.coords);
+	setPosition(pos.coords, "Current location");
 }
 
-function setPosition(pos) {
+function setPosition(pos, label) {
     var x = document.getElementById("location");
-    x.innerHTML = "Used position: lat: " + pos.latitude + ", lon: " + pos.longitude;
+    x.innerHTML = "Selected: " + label + "<br>lat: " + pos.latitude + ", lon: " + pos.longitude;
     position = pos;
 }
 
