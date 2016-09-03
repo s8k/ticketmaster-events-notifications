@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 require('./db/bootstrap');
+require('./jobs');
 
 var routes = require('./routes/index');
 var signin = require('./routes/signin');
@@ -36,7 +37,6 @@ app.use('/events', events);
 app.use('/around', around);
 app.use('/artists', artists);
 app.use('/wizard', wizard);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
