@@ -66,7 +66,7 @@ function obtainToken(authCode) {
             redirect_uri: config.spotify.callbackUrl
         },
         headers: {
-            'Authorization': 'Basic ' + new Buffer(config.spotify.clientId + ':' + config.spotify.cliendSecret).toString('base64')
+            'Authorization': 'Basic ' + new Buffer(config.spotify.clientId + ':' + config.spotify.clientSecret).toString('base64')
         },
         dataType: 'form-url-encoded'
     });
