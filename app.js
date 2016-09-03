@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 require('./db/bootstrap');
+require('./jobs');
 
 var routes = require('./routes/index');
 var signin = require('./routes/signin');
